@@ -52,7 +52,7 @@
       <HintPath>..\packages\Args.1.1.2\lib\Net40\Args.dll</HintPath>
     </Reference>
     <Reference Include="rift.net">
-      <HintPath>..\packages\rift.net.0.9.6000.29514\lib\net45\rift.net.dll</HintPath>
+      <HintPath>..\packages\rift.net.1.0.5521.26978\lib\net45\rift.net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +62,7 @@
     <Compile Include="GameRunner.cs" />
     <Compile Include="Waiter.cs" />
     <Compile Include="CommandObject.cs" />
+    <Compile Include="GameChecker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -52,6 +52,18 @@ namespace RiftScratchGame
 			var gameClient = new ScratchGameClient (session);
 			PushOverClient pushOverClient = arguments.PushoverKey != null ? new PushOverClient (arguments.PushoverKey) : null;
 
+			var games = gameClient.ListGames ();
+
+			if (string.IsNullOrWhiteSpace (arguments.Game)) {
+				Console.WriteLine ("The following games are available to play:");
+
+				var currentGames = string.Join (System.Environment.NewLine, games.Select (x => string.Format("\t{0}", x.Name)));
+
+				Console.WriteLine (currentGames);
+
+				return;
+			}
+
 			var characters = riftClient.ListCharacters ();
 			var character = characters.FirstOrDefault (x => x.FullName == arguments.Character);
 
@@ -65,7 +77,6 @@ namespace RiftScratchGame
 				return;
 			}
 
-			var games = gameClient.ListGames ();
 			var game = games.FirstOrDefault (x => x.Name == arguments.Game);
 
 			if (game == null) {
@@ -83,8 +94,12 @@ namespace RiftScratchGame
 				logger.InfoFormat ("I see you're using PushOver.  I'll let you know there whenever you win something.");
 			}
 
+			var checker = new GameChecker (session, pushOverClient);
 			var runner = new GameRunner (session, pushOverClient);
 			var waiter = new Waiter ();
+
+			// Start up the game checker
+			checker.Start ();
 
 			// Start up the game runner
 			runner.Start (game, character);
